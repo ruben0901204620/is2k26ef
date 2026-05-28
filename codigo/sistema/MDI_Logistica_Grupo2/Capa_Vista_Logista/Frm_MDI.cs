@@ -59,7 +59,7 @@ namespace Capa_Vista_Logista
             menuItems = new Dictionary<MenuOpciones, ToolStripMenuItem>
             {
                 { MenuOpciones.Archivo, archivoToolStripMenuItem },
-                { MenuOpciones.Catalogos, catálogosToolStripMenuItem },
+                //{ MenuOpciones.Catalogos, catálogossToolStripMenuItem },
                 { MenuOpciones.Procesos, procesosToolStripMenuItem },
                 { MenuOpciones.Reportes, herramientasToolStripMenuItem },
                 { MenuOpciones.Ayudas, asignacionesToolStripMenuItem },
@@ -76,10 +76,12 @@ namespace Capa_Vista_Logista
                     case MenuOpciones.Archivo:
                     case MenuOpciones.Reportes:
                     case MenuOpciones.Ayudas:
+                    case MenuOpciones.Catalogos:
+                    case MenuOpciones.Procesos:
                         menuItems[opcion].Enabled = true;
                         break;
                     default:
-                        menuItems[opcion].Enabled = false;
+                        menuItems[opcion].Enabled = true;
                         break;
                 }
             }
@@ -107,10 +109,10 @@ namespace Capa_Vista_Logista
             };
 
 
-            foreach (var sub in mapaCatalogos.Values) sub.Enabled = false;
-            foreach (var sub in mapaProcesos.Values) sub.Enabled = false;
-            foreach (var sub in mapaReportes.Values) sub.Enabled = false;
-            menuItems[MenuOpciones.Seguridad].Enabled = false;
+            foreach (var sub in mapaCatalogos.Values) sub.Enabled = true;
+            foreach (var sub in mapaProcesos.Values) sub.Enabled = true;
+            foreach (var sub in mapaReportes.Values) sub.Enabled = true;
+            menuItems[MenuOpciones.Seguridad].Enabled = true;
 
             DataTable dtPermisosPerfil = controladorPermisosPerfil.datObtenerPermisosPorPerfil(iIdPerfil);
             foreach (DataRow row in dtPermisosPerfil.Rows)
@@ -156,7 +158,7 @@ namespace Capa_Vista_Logista
                 }
             }
 
-            menuItems[MenuOpciones.Catalogos].Enabled = mapaCatalogos.Values.Any(m => m.Enabled);
+            //menuItems[MenuOpciones.Catalogos].Enabled = mapaCatalogos.Values.Any(m => m.Enabled);
             menuItems[MenuOpciones.Procesos].Enabled = mapaProcesos.Values.Any(m => m.Enabled);
             menuItems[MenuOpciones.Reportes].Enabled = mapaProcesos.Values.Any(m => m.Enabled);
         }
@@ -167,6 +169,46 @@ namespace Capa_Vista_Logista
             Frm_LOGIN login = new Frm_LOGIN();
             login.ShowDialog();
             this.Close();
+        }
+
+
+        private void consultaDeBitácoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Capa_Vista_Seguridad.Frm_Bitacora bitacoras = new Capa_Vista_Seguridad.Frm_Bitacora();
+            bitacoras.StartPosition = FormStartPosition.CenterScreen;
+            bitacoras.Show();
+
+        }
+
+        private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Frm_cambiar_contrasena contrasena = new Frm_cambiar_contrasena(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario);
+            contrasena.StartPosition = FormStartPosition.CenterScreen;
+            contrasena.Show();
+
+        }
+
+        private void mantenimientoAplicacionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Frm_asignacion_aplicacion_usuario app = new Frm_asignacion_aplicacion_usuario();
+            app.StartPosition = FormStartPosition.CenterScreen;
+            app.Show();
+        }
+
+        private void crearUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Frm_Usuario usr = new Frm_Usuario();
+            usr.StartPosition = FormStartPosition.CenterScreen;
+            usr.Show();
+        }
+
+
+
+        private void seccionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VIsta_seccion.frm_seccion secciones = new VIsta_seccion.frm_seccion();
+            secciones.StartPosition = FormStartPosition.CenterScreen;
+            secciones.Show();
         }
     }
 }
